@@ -4,6 +4,7 @@ from sys import exit
 from Player import *
 from Enemy import *
 from Button import Button
+from Map import Map
 from random import choice, randint
 
 # set up pygame and screen
@@ -38,32 +39,8 @@ pygame.time.set_timer(enemyTimer, enemyTime)
 moreEnemiesTimer = pygame.USEREVENT + 2
 pygame.time.set_timer(moreEnemiesTimer, 20000)
 
-# set up land
-grass = pygame.transform.scale2x(pygame.image.load("assets/Land/Tiles/tile000.png").convert_alpha())
-grass1 = pygame.transform.scale2x(pygame.image.load("assets/Land/Tiles/tile001.png").convert_alpha())
-grass2 = pygame.transform.scale2x(pygame.image.load("assets/Land/Tiles/tile002.png").convert_alpha())
-flower = pygame.transform.scale2x(pygame.image.load("assets/Land/Tiles/tile013.png").convert_alpha())
-flower2 = pygame.transform.scale2x(pygame.image.load("assets/Land/Tiles/tile026.png").convert_alpha())
-ground = pygame.surface.Surface((800, 600))
-for i in range(30):
-        for j in range(20):
-            num = randint(1, 100)
-            if num <= 70:
-                ground.blit(grass, (i * 32, j * 32))
-            elif num < 80:
-                ground.blit(grass1, (i * 32, j * 32))
-            elif num < 90:
-                ground.blit(grass2, (i * 32, j * 32))
-            elif num < 95:
-                ground.blit(flower, (i * 32, j * 32))
-            elif num <= 100:
-                ground.blit(flower2, (i * 32, j * 32))
-
-# set up barricade
-wall = pygame.transform.scale2x(pygame.image.load("assets/Walls/wall.jpg").convert_alpha())
-wall = pygame.transform.rotate(wall, 90)
-for i in range(20):     # the wall
-    ground.blit(wall, (150, i * 30))
+# set up map
+map = Map()
 
 # set up game loop 
 isPlaying = False
@@ -98,7 +75,7 @@ while True:
 
     if isPlaying:
         ########################## Terrain/Ground Stuff #############################
-        screen.blit(ground, (0,0))
+        screen.blit(map, (0,0))
         
         ######################### Arrow Stuff ###############################
         keys = pygame.mouse.get_pressed()
